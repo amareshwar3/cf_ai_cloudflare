@@ -44,3 +44,13 @@ export interface MissionBriefResponse {
   source: "workers-ai" | "fallback";
   model: string;
 }
+
+export interface OpportunityRadarResponse {
+  title: string;
+  pitch: string;
+  mvpScope: string[];
+  roadmap7d: string[];
+  moat: string;
+  source: "workers-ai" | "fallback";
+  model: string;
+}

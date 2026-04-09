@@ -24,6 +24,16 @@ The app includes a reviewer-friendly feature: `Generate Mission Brief`.
 - Suggests a strong next prompt for execution
 - Shows source telemetry (`workers-ai` or `fallback`)
 
+## New Feature: Opportunity Radar
+
+The app now includes `Generate Opportunity Radar`, a product strategy generator built for standout demos.
+
+- Generates a product title and investment-style pitch
+- Produces MVP scope bullets for immediate implementation
+- Produces a practical 7-day roadmap
+- Extracts a moat statement to sharpen product positioning
+- Includes source/model telemetry for runtime trust
+
 ## Assignment Requirement Coverage
 
 - LLM: Uses Cloudflare Workers AI with `@cf/meta/llama-3.3-70b-instruct-fp8-fast` through `src/services/ai-client.ts`.
@@ -94,6 +104,7 @@ Current deployed URL:
 - `src/services/ai-client.ts`: Workers AI integration + local fallback policy.
 - `src/services/access-auth.ts`: Cloudflare Access JWT validation middleware.
 - `src/services/mission-brief.ts`: Mission brief generation service.
+- `src/services/opportunity-radar.ts`: Product strategy and opportunity mapping service.
 - `src/utils/http.ts`: Shared JSON response helper.
 - `src/utils/session.ts`: Session identity helper.
 - `src/config.ts`: Shared constants and prompt configuration.
@@ -132,4 +143,12 @@ If your git repository name is different, rename it before submission (for examp
 
 - Default path is keyless for model use through Cloudflare Workers AI binding (`[ai] binding = "AI"`).
 - Voice input uses browser-native Web Speech API and does not require external keys.
+
+## Reviewer Demo Flow (Suggested)
+
+1. Send 2-3 chat messages describing a product idea and constraints.
+2. Generate `Mission Brief` and show summary/actions/risks.
+3. Generate `Opportunity Radar` and show pitch + MVP + roadmap.
+4. Show LLM source telemetry (`workers-ai` or `fallback`) in UI.
+5. Demonstrate persistent memory by refreshing and reloading session context.
 

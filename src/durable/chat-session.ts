@@ -1,6 +1,7 @@
 import { ACTIVE_MESSAGES_LIMIT, CLEANUP_INTERVAL_MS, MAX_MESSAGES } from "../config";
 import { generateAssistantReply } from "../services/ai-client";
 import { generateMissionBrief } from "../services/mission-brief";
+import { generateOpportunityRadar } from "../services/opportunity-radar";
 import type { ChatMessage, ChatPayload, ChatResponse, Env } from "../types";
 import { json } from "../utils/http";
 
@@ -59,6 +60,19 @@ export class ChatSession implements DurableObject {
     return json(brief);
   }
 
+  private async handleRadar(request: Request): Promise<Response> {
+    const history = await this.loadMessages();
+    if (history.length === 0) {
+      return json({ error: "No conversation found to generate radar." }, 400);
+    }
+
+    const body = (await request.json().catch(() => ({}))) as { goal?: string };
+    const goal = body?.goal?.trim() ?? "";
+
+    const radar = await generateOpportunityRadar(this.env, history, goal);
+    return json(radar);
+  }
+
   private async handleChat(request: Request): Promise<Response> {
     const body = (await request.json()) as ChatPayload;
     const userMessage = body?.message?.trim();
@@ -115,6 +129,10 @@ export class ChatSession implements DurableObject {
 
     if (request.method === "POST" && url.pathname === "/brief") {
       return this.handleBrief();
+    }
+
+    if (request.method === "POST" && url.pathname === "/radar") {
+      return this.handleRadar(request);
     }
 
     return json({ error: "Not found" }, 404);

@@ -13,6 +13,9 @@ const inputModeEl = document.getElementById("inputMode");
 const modelModeEl = document.getElementById("modelMode");
 const briefBtn = document.getElementById("briefBtn");
 const briefOutput = document.getElementById("briefOutput");
+const radarBtn = document.getElementById("radarBtn");
+const radarGoal = document.getElementById("radarGoal");
+const radarOutput = document.getElementById("radarOutput");
 
 const sessionId = localStorage.getItem(SESSION_KEY) || crypto.randomUUID();
 localStorage.setItem(SESSION_KEY, sessionId);
@@ -59,7 +62,8 @@ async function sendMessage(text) {
   });
 
   if (!res.ok) {
-    bubble("assistant", "Request failed. Please retry.");
+    const err = await res.json().catch(() => ({}));
+    bubble("assistant", err.error || "Request failed. Please retry.");
     sendBtn.disabled = false;
     return;
   }
@@ -92,6 +96,9 @@ clearBtn.addEventListener("click", async () => {
   archivedCountEl.textContent = "0";
   if (briefOutput) {
     briefOutput.textContent = "No brief generated yet.";
+  }
+  if (radarOutput) {
+    radarOutput.textContent = "No radar generated yet.";
   }
 });
 
@@ -133,6 +140,53 @@ if (briefBtn) {
 
     briefBtn.textContent = "Generate Mission Brief";
     briefBtn.disabled = false;
+  });
+}
+
+if (radarBtn) {
+  radarBtn.addEventListener("click", async () => {
+    radarBtn.disabled = true;
+    radarBtn.textContent = "Mapping...";
+
+    const res = await fetch(`/api/radar?sessionId=${encodeURIComponent(sessionId)}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ goal: radarGoal?.value || "" })
+    });
+
+    if (!res.ok) {
+      if (radarOutput) {
+        radarOutput.textContent = "Unable to generate radar yet. Send at least one message first.";
+      }
+      radarBtn.textContent = "Generate Opportunity Radar";
+      radarBtn.disabled = false;
+      return;
+    }
+
+    const data = await res.json();
+    if (radarOutput) {
+      const scope = Array.isArray(data.mvpScope) ? data.mvpScope.map((item) => `- ${item}`).join("\n") : "- None";
+      const roadmap = Array.isArray(data.roadmap7d) ? data.roadmap7d.map((item) => `- ${item}`).join("\n") : "- None";
+      radarOutput.textContent = [
+        `Title: ${data.title || "N/A"}`,
+        "",
+        `Pitch: ${data.pitch || "N/A"}`,
+        "",
+        "MVP Scope:",
+        scope,
+        "",
+        "7-Day Roadmap:",
+        roadmap,
+        "",
+        `Moat: ${data.moat || "N/A"}`,
+        `Source: ${data.source || "unknown"} (${data.model || "unknown"})`
+      ].join("\n");
+    }
+
+    radarBtn.textContent = "Generate Opportunity Radar";
+    radarBtn.disabled = false;
   });
 }
 
