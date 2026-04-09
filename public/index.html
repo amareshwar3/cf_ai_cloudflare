@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orbit Concierge | Cloudflare AI Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="glow glow-left"></div>
+    <div class="glow glow-right"></div>
+
+    <main class="shell">
+      <section class="hero card reveal">
+        <p class="eyebrow">cf_ai_orbit_concierge</p>
+        <h1>Build Fast. Think Deep. Deploy on Cloudflare.</h1>
+        <p class="hero-copy">
+          Orbit Concierge is an AI operations copilot powered by Workers AI + Durable Objects.
+          It supports live chat, voice capture, and persistent memory per session.
+        </p>
+        <div class="chips">
+          <span>Workers AI</span>
+          <span>Durable Objects</span>
+          <span>Realtime Chat</span>
+          <span>Session Memory</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <article class="chat card reveal delay-1">
+          <header class="panel-head">
+            <div>
+              <p class="panel-title">Agent Channel</p>
+              <p class="panel-sub" id="sessionLabel">Session: initializing...</p>
+            </div>
+            <button id="clearBtn" class="ghost">Clear Memory</button>
+          </header>
+
+          <div id="messages" class="messages" aria-live="polite"></div>
+
+          <form id="chatForm" class="composer">
+            <textarea
+              id="messageInput"
+              placeholder="Ask Orbit Concierge about architecture, debugging, optimization, or product strategy..."
+              rows="3"
+              required
+            ></textarea>
+            <div class="actions">
+              <button type="button" id="voiceBtn" class="ghost">Voice</button>
+              <button type="submit" id="sendBtn">Send</button>
+            </div>
+          </form>
+        </article>
+
+        <aside class="side card reveal delay-2">
+          <h2>Session Memory</h2>
+          <p class="side-copy">
+            Durable Object state stores your conversation history and trims stale context over time.
+          </p>
+          <dl id="stats" class="stats">
+            <div>
+              <dt>Stored messages</dt>
+              <dd id="storedCount">0</dd>
+            </div>
+            <div>
+              <dt>Archived messages</dt>
+              <dd id="archivedCount">0</dd>
+            </div>
+            <div>
+              <dt>Input mode</dt>
+              <dd id="inputMode">Chat</dd>
+            </div>
+            <div>
+              <dt>LLM source</dt>
+              <dd id="modelMode">Pending</dd>
+            </div>
+          </dl>
+
+          <div class="hint">
+            <p>Tip</p>
+            <span>Use voice to fill the chat box, then refine and send.</span>
+          </div>
+
+          <div class="brief">
+            <button id="briefBtn" class="ghost" type="button">Generate Mission Brief</button>
+            <pre id="briefOutput">No brief generated yet.</pre>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

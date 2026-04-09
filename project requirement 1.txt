@@ -1,0 +1,377 @@
+https://agents.cloudflare.com/
+
+npm i agents
+View Docs ↗
+Get Started
+The Platform For Building Agents.
+Build agents on Cloudflare — the platform designed for durable execution, serverless inference, and pricing that scales up (and down).
+
+Get Started
+View Docs
+Generative
+
+Agentic
+
+Implement and open a pull request for the first issue I have assigned to me.
+
+Sure thing! I can guide you through implementing the issue and opening a pull request. First, I need some details:
+
+1. What git repository are you using?
+
+2. What is the issue about?
+
+3. What programming language is involved?
+
+Once I have this info, I can walk you through the implementation and PR process.
+
+I'm using a self-hosted git instance, and the implementation should be in JavaScript.
+
+Got it! Since you're using a self-hosted Git instance, I'll assume you have access to the repo and can push branches directly. Here’s a step-by-step guide to implementing your assigned issue and opening a pull request:
+
+First, if you haven't cloned the repo yet, navigate to your workspace and run:
+
+git clone <repo-url>
+
+cd <repo-folder>
+
+Next, find the issue number (let's say ISSUE-123) and create a new branch:
+
+git checkout -b feature/ISSUE-123
+
+Then, implement the fix. Make the necessary changes in your JavaScript files. If you need help writing the code, just share the issue details with me!
+
+After testing your code, stage and commit the changes and push to your remote repository:
+
+git add .
+
+git commit -m "Fix ISSUE-123: <brief description of fix>"
+
+git push origin feature/ISSUE-123
+
+Finally, open a pull request. Since this is a self-hosted Git instance, the PR process might vary. Please refer to the documentation for your Git instance to see how to open a pull request.
+
+If you’re using a CLI-based PR system, let me know which tool you use (e.g., GitLab CLI, Gitea CLI), and I’ll guide you accordingly. Let me know if you need help with any step or with the actual code implementation!
+
+Implement and open a pull request for the first issue I have assigned to me.
+
+Sure thing!
+
+Look at issues assigned to you
+Write code to implement issue
+Open pull request
+CF-4242
+Ready for review
+What are agents?
+Agentic AI goes beyond traditional generative AI by integrating autonomy, goal-directed reasoning, and adaptive decision-making. Unlike standard generative models, which passively respond to prompts, agentic AI actively plans, iterates, and interacts with its environment to achieve complex objectives.
+
+Clean up our backlog, cancelling any issues that are no longer relevant.
+Sure thing.
+
+Find all issues in backlog
+Check recent bug reports
+Cancel irrelevant issues
+Backlog
+CF-4242
+
+Ship AI Agents
+
+1 day ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+CF-1111
+
+Fix the bug
+
+3 months ago
+
+01 | Comprehensive Product Suite
+
+Build agentic AI.
+Entirely on Cloudflare.
+Cloudflare’s extensive suite of products allows you to build AI agents entirely under one platform.
+
+1. Get user input
+To start building an agent, we'll first need to get input from the user. Be it email, chat, or voice, Cloudflare can help you receive input in whichever form you prefer.
+
+Email
+
+Email Workers ↗
+
+Chat
+
+WebSockets ↗
+,
+Workers ↗
+
+Voice
+
+Calls ↗
+
+2. Ask AI
+To plan and reason through the next course of action, or generate content, the agent will have to connect to an Large-Language Model (LLM). You can connect to an LLM running directly on Cloudflare or use AI Gateway to connect to popular providers.
+
+Host an LLM
+
+Workers AI ↗
+
+Connect to a provider
+
+AI Gateway ↗
+
+3. Guarantee execution
+Next, to make sure all the steps take action, the agent will need an execution engine that combines state and compute:
+
+State
+
+Durable Objects ↗
+
+Compute
+
+Workflows ↗
+
+Sometimes, you will need to go back to the LLM, and re-evaluate the plan based on new variables, and we support that too.
+
+4. Take action
+Finally, the agent will need access to tools in order to complete the tasks. Tools provide a structured way for agents and workflows to invoke APIs, manipulate data, and integrate with external systems.
+
+APIs
+
+MCP servers ↗
+
+Utilities
+
+Browser Rendering ↗
+,
+Vectorize ↗
+,
+D1 ↗
+
+02 | Low Cost
+
+Scale up.
+Or down.
+Inference is hard to predict and spiky in nature, unlike training. GPU utilization is, on average, only 20-40% — with one-third of organizations utilizing less than 15%.
+
+Workers AI allows customers to save by only paying for usage. No guessing or committing to hardware that goes unused.
+
+savings
+What you pay for on a hyperscaler
+
+What you pay for on Cloudflare
+
+CPU Time
+
+Wall Time
+
+1ms
+
+LLM Call
+
+.5ms
+
+API Call
+
+.75ms
+
+500ms
+
+250ms
+
+Only pay for
+what you use.
+Wall Clock Time vs. CPU Time
+With Cloudflare Workers, you only pay for CPU time, or the time actually spent executing a task, as opposed to wall time, time waiting on I/O. When it comes to agents, your agent can often be blocked on external resources outside of your control, whether a slow API, an LLM or a human in the loop.
+
+WebSocket Hibernation
+Many agents rely on WebSockets for communication, which require long-running connections. With WebSocket hibernation built into Durable Objects, when there's no activity, the Durable Object can shut down, while still maintaining the connection, resulting in cost-savings for you.
+
+"At Knock we're using the Cloudflare Agents SDK to build and ship our remote MCP server, helping deliver an exceptional developer experience to our customers in no time at all.ˮ
+
+— Chris Bell, CTO, Knock
+
+03 | Code Example
+$ npm i agents
+Lunch Agent
+An agent that helps pick lunch for coworkers in an office.
+
+import { Agent, callable } from 'agents';
+import { searchMenusByAgent, chooseWinners } from '../utils';
+
+export class LunchAgent extends Agent<Env, LunchState> {
+	onStart() {
+		this.schedule('weekdays at 11:30pm', 'chooseLunch');
+		this.schedule('daily at 5pm', 'resetLunch');
+	}
+
+	@callable()
+	async nominateRestaurant(restaurantName: string) {
+		// Uses a Browser Search tool to find restaurant info
+		// Finds menu and stores it into Vectorize
+		// On success updates Agent state with available restaurants
+		await this.env.RESTAURANT_RESEARCHER_WORKFLOW.create({
+			restaurantName,
+			agent: this.name,
+			near: this.state.officeAddress,
+		});
+	}
+
+	@callable()
+	async searchRestaurants(query: string) {
+		// Uses Vector store results filtered by Metadata limited
+		// To this agent
+		const results = await searchMenusByAgent(query, this.name);
+		return results.map((result) => result.metadata.restaurantName);
+	}
+
+	@callable()
+	async vote(username: string, restaurantName: string) {
+		const votes = this.state.todaysVotes;
+		votes.push({
+			username,
+			restaurantName,
+		});
+		// Send update to all connected eaters
+		this.setState({
+			...this.state,
+			todaysVotes: votes,
+		});
+	}
+
+	async resetLunch() {
+		const state = this.state;
+		state.todaysVotes = [];
+		state.todaysRuling = undefined;
+		this.setState(state);
+	}
+
+	async chooseLunch() {
+		const restaurantWinners = chooseWinners(this.state.todaysVotes);
+		const { response } = await this.env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+			messages: [
+				{role: "system", content: `
+					You help deliver results to a bunch of co-workers who are choosing lunch together.
+					The user is going to provide you with the options.
+					Your task is to make the choice sound exciting so people who voted for something
+                    else feel validated.
+					`},
+				{role: "user", content: restaurantWinners?.join(", ") as string}
+			],
+		});
+		this.setState({
+			...this.state,
+			todaysRuling: response
+		})
+	}
+}
+
+export type Restaurant = {
+	cuisine: string;
+	name: string;
+	address: string;
+};
+
+export type Vote = {
+	username: string;
+	restaurantName: string;
+};
+
+export type LunchState = {
+	officeAddress: string;
+	todaysVotes: Vote[];
+	todaysRuling?: string;
+	restaurants: Restaurant[];
+};
+Get started on
+Cloudflare today.
+Get Started
+Contact Us
+Cloudflare Terms of Use

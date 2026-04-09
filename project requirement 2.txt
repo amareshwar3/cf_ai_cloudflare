@@ -1,0 +1,173 @@
+https://developers.cloudflare.com/agents/
+
+Skip to content
+STOP! If you are an AI agent or LLM, read this before continuing. This is the HTML version of a Cloudflare documentation page. Always request the Markdown version instead — HTML wastes context. Get this page as Markdown: https://developers.cloudflare.com/agents/index.md (append index.md) or send Accept: text/markdown to https://developers.cloudflare.com/agents/. For this product's page index use https://developers.cloudflare.com/agents/llms.txt. For all Cloudflare products use https://developers.cloudflare.com/llms.txt. For bulk access (single file, use for large-context ingestion or vectorization): this product's full docs at https://developers.cloudflare.com/agents/llms-full.txt. All Cloudflare docs at https://developers.cloudflare.com/llms-full.txt.
+
+Cloudflare Docs
+
+Search
+K
+Docs Directory
+APIs
+SDKs
+Help
+Log in
+Select theme
+Auto
+Agents
+Search sidebar...
+Overview
+Patterns
+On this page
+Overview
+Get started
+What agents can do
+How it works
+Build on the Cloudflare Platform
+Tags
+AI
+Was this helpful?
+
+
+Yes
+
+No
+Edit page
+Report issue
+Directory
+Agents
+
+Copy page
+
+Build Agents on Cloudflare
+Most AI applications today are stateless — they process a request, return a response, and forget everything. Real agents need more. They need to remember conversations, act on schedules, call tools, coordinate with other agents, and stay connected to users in real-time. The Agents SDK gives you all of this as a TypeScript class.
+
+Each agent runs on a Durable Object — a stateful micro-server with its own SQL database, WebSocket connections, and scheduling. Deploy once and Cloudflare runs your agents across its global network, scaling to tens of millions of instances. No infrastructure to manage, no sessions to reconstruct, no state to externalize.
+
+Get started
+Three commands to a running agent. No API keys required — the starter uses Workers AI by default.
+
+Terminal window
+npx create-cloudflare@latest --template cloudflare/agents-starter
+cd agents-starter && npm install
+npm run dev
+
+The starter includes streaming AI chat, server-side and client-side tools, human-in-the-loop approval, and task scheduling — a foundation you can build on or tear apart. You can also swap in OpenAI, Anthropic, Google Gemini, or any other provider.
+
+Build a chat agent
+Step-by-step tutorial that walks through the starter and shows how to customize it.
+Add to an existing project
+Install the agents package into a Workers project and wire up routing.
+What agents can do
+Remember everything — Every agent has a built-in SQL database and key-value state that syncs to connected clients in real-time. State survives restarts, deploys, and hibernation.
+Build AI chat — AIChatAgent gives you streaming AI chat with automatic message persistence, resumable streams, and tool support. Pair it with the useAgentChat React hook to build chat UIs in minutes.
+Think with any model — Call any AI model — Workers AI, OpenAI, Anthropic, Gemini — and stream responses over WebSockets or Server-Sent Events. Long-running reasoning models that take minutes to respond work out of the box.
+Use and serve tools — Define server-side tools, client-side tools that run in the browser, and human-in-the-loop approval flows. Expose your agent's tools to other agents and LLMs via MCP.
+Act on their own — Schedule tasks on a delay, at a specific time, or on a cron. Agents can wake themselves up, do work, and go back to sleep — without a user present.
+Browse the web — Spin up headless browsers to scrape, screenshot, and interact with web pages.
+Orchestrate work — Run multi-step workflows with automatic retries, or coordinate across multiple agents.
+React to events — Handle inbound email, HTTP requests, WebSocket messages, and state changes — all from the same class.
+How it works
+An agent is a TypeScript class. Methods marked with @callable() become typed RPC that clients can call directly over WebSocket.
+
+JavaScript
+TypeScript
+JavaScript
+import { Agent, callable } from "agents";
+
+export class CounterAgent extends Agent {
+  initialState = { count: 0 };
+
+  @callable()
+  increment() {
+    this.setState({ count: this.state.count + 1 });
+    return this.state.count;
+  }
+}
+
+import { useAgent } from "agents/react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const agent = useAgent({
+    agent: "CounterAgent",
+    onStateUpdate: (state) => setCount(state.count),
+  });
+
+  return <button onClick={() => agent.stub.increment()}>{count}</button>;
+}
+
+For AI chat, extend AIChatAgent instead. Messages are persisted automatically, streams resume on disconnect, and the React hook handles the UI.
+
+JavaScript
+TypeScript
+JavaScript
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { createWorkersAI } from "workers-ai-provider";
+import { streamText, convertToModelMessages } from "ai";
+
+export class ChatAgent extends AIChatAgent {
+  async onChatMessage() {
+    const workersai = createWorkersAI({ binding: this.env.AI });
+    const result = streamText({
+      model: workersai("@cf/zai-org/glm-4.7-flash"),
+      messages: await convertToModelMessages(this.messages),
+    });
+    return result.toUIMessageStreamResponse();
+  }
+}
+
+Refer to the quick start for a full walkthrough, the chat agents guide for the full chat API, or the Agents API reference for the complete SDK.
+
+Build on the Cloudflare Platform
+Workers AI
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network. No API keys required.
+
+Workers
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+AI Gateway
+Observe and control your AI applications with caching, rate limiting, request retries, model fallback, and more.
+
+Vectorize
+Build full-stack AI applications with Vectorize, Cloudflare's vector database for semantic search, recommendations, and providing context to LLMs.
+
+Workflows
+Build stateful agents that guarantee executions, including automatic retries, persistent state that runs for minutes, hours, days, or weeks.
+
+Resources
+API
+New to Cloudflare?
+Directory
+Sponsorships
+Open Source
+Support
+Help Center
+System Status
+Compliance
+GDPR
+Company
+cloudflare.com
+Our team
+Careers
+Tools
+Cloudflare Radar
+Speed Test
+Is BGP Safe Yet?
+RPKI Toolkit
+Certificate Transparency
+Community
+X
+Discord
+YouTube
+GitHub
+© 2026 Cloudflare, Inc.
+Privacy Policy
+Terms of Use
+Report Security Issues
+Trademark
+privacy options
+Next
+Quick start
+Edit page
+Last updated: Feb 21, 2026

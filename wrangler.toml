@@ -1,0 +1,26 @@
+name = "cf_ai_orbit_concierge"
+main = "src/index.ts"
+compatibility_date = "2026-04-07"
+account_id = "5368ab85f5ddfdf93a0ebd096283e6e8"
+
+[vars]
+LOCAL_FALLBACK_MODE = "true"
+ACCESS_POLICY_MODE = "enforce"
+ACCESS_TEAM_DOMAIN = "https://amareshwaranampally.cloudflareaccess.com"
+ACCESS_AUD = "49835361259508c7fd964a6b73fd814fd2afe0369e4f5e343eee9b533db85127"
+
+[ai]
+binding = "AI"
+remote = true
+
+[[durable_objects.bindings]]
+name = "CHAT_SESSIONS"
+class_name = "ChatSession"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ChatSession"]
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
