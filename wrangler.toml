@@ -1,4 +1,4 @@
-name = "cf_ai_orbit_concierge"
+name = "cfai"
 main = "src/index.ts"
 compatibility_date = "2026-04-07"
 account_id = "5368ab85f5ddfdf93a0ebd096283e6e8"
