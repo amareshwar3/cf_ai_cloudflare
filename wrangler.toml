@@ -7,7 +7,7 @@ account_id = "5368ab85f5ddfdf93a0ebd096283e6e8"
 LOCAL_FALLBACK_MODE = "true"
 ACCESS_POLICY_MODE = "enforce"
 ACCESS_TEAM_DOMAIN = "https://amareshwaranampally.cloudflareaccess.com"
-ACCESS_AUD = "49835361259508c7fd964a6b73fd814fd2afe0369e4f5e343eee9b533db85127"
+ACCESS_AUD = "49835361259508c7fd964a6b73fd814fd2afe0369e4f5e343eee9b533db85127,ee7887503a73ff9d96b12b97b3fb9d3d48fb3df7e1061b576efd59eebdfa0b02"
 
 [ai]
 binding = "AI"

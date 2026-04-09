@@ -42,6 +42,9 @@ function render(messages) {
 async function loadHistory() {
   const res = await fetch(`/api/history?sessionId=${encodeURIComponent(sessionId)}`);
   if (!res.ok) {
+    if (res.status === 403) {
+      bubble("assistant", "Access session is missing or expired. Re-open the live link and complete Cloudflare Access login.");
+    }
     return;
   }
   const data = await res.json();
@@ -90,7 +93,16 @@ formEl.addEventListener("submit", async (event) => {
 });
 
 clearBtn.addEventListener("click", async () => {
-  await fetch(`/api/reset?sessionId=${encodeURIComponent(sessionId)}`, { method: "POST" });
+  const res = await fetch(`/api/reset?sessionId=${encodeURIComponent(sessionId)}`, { method: "POST" });
+  if (!res.ok) {
+    if (res.status === 403) {
+      bubble("assistant", "Clear failed because Access session is not valid. Refresh and sign in again.");
+    } else {
+      bubble("assistant", "Unable to clear memory right now. Please retry.");
+    }
+    return;
+  }
+
   messagesEl.innerHTML = "";
   storedCountEl.textContent = "0";
   archivedCountEl.textContent = "0";
