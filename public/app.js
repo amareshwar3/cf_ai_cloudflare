@@ -194,24 +194,59 @@ const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogni
 if (!SpeechRecognition) {
   voiceBtn.disabled = true;
   voiceBtn.textContent = "Voice Unavailable";
+  if (inputModeEl) {
+    inputModeEl.textContent = "Unavailable";
+  }
 } else {
   const recognition = new SpeechRecognition();
   recognition.lang = "en-US";
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
+  let isListening = false;
+
+  recognition.addEventListener("start", () => {
+    isListening = true;
+    voiceBtn.textContent = "Listening...";
+    voiceBtn.disabled = true;
+  });
 
   recognition.addEventListener("result", (event) => {
     const transcript = event.results[0][0].transcript;
     inputEl.value = transcript;
-    inputModeEl.textContent = "Voice";
+    if (inputModeEl) {
+      inputModeEl.textContent = "Voice";
+    }
+  });
+
+  recognition.addEventListener("error", (event) => {
+    if (inputModeEl) {
+      inputModeEl.textContent = "Chat";
+    }
+
+    if (event.error === "not-allowed") {
+      bubble("assistant", "Microphone permission is blocked. Allow microphone access and try again.");
+      return;
+    }
+
+    if (event.error === "no-speech") {
+      bubble("assistant", "No speech detected. Try speaking a little louder and closer to the mic.");
+      return;
+    }
+
+    bubble("assistant", "Voice capture failed. Please retry or type your message.");
   });
 
   recognition.addEventListener("end", () => {
+    isListening = false;
     voiceBtn.textContent = "Voice";
+    voiceBtn.disabled = false;
   });
 
   voiceBtn.addEventListener("click", () => {
-    voiceBtn.textContent = "Listening...";
+    if (isListening) {
+      return;
+    }
+
     recognition.start();
   });
 }
